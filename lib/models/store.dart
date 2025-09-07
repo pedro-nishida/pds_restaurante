@@ -8,7 +8,7 @@ class Store {
   String? storeEmail;
   String? storePassword;
 
-  Store({this.storeId, this.storeName, this.storeAddress, this.storeLatitude, this.storeLongitude, this.storePhone, this.storeEmail, this.storePassword})
+  Store({this.storeId, this.storeName, this.storeAddress, this.storeLatitude, this.storeLongitude, this.storePhone, this.storeEmail, this.storePassword});
 
   Store.fromJson(Map<String, dynamic> json){
     storeId = json['storeId'];
@@ -22,14 +22,15 @@ class Store {
   }
 
   Map<String, dynamic> toJson(){
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['storeId'] = this.storeId;
-    data['storeName'] = this.storeName;
-    data['storeAddress'] = this.storeAddress;
-    data['storeLatitude'] = this.storeLatitude;
-    data['storeLongitude'] = this.storeLongitude;
-    data['storePhone'] = this.storePhone;
-    data['storeEmail'] = this.storeEmail;
-    data['storePassword'] = this.storePassword;
+    final Map<String, dynamic> data = <String, dynamic>{}; // More idiomatic way to create a map
+    data['storeId'] = storeId; // 'this.' is not strictly necessary here
+    data['storeName'] = storeName;
+    data['storeAddress'] = storeAddress;
+    data['storeLatitude'] = storeLatitude;
+    data['storeLongitude'] = storeLongitude;
+    data['storePhone'] = storePhone;
+    data['storeEmail'] = storeEmail;
+    data['storePassword'] = storePassword;
+    return data; // Added return statement
   }
 }
