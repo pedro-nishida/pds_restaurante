@@ -37,6 +37,15 @@ dependencies:
   get: ^4.6.6
   http: ^1.1.0
 
+  # A simple and popular state management library
+  provider: ^6.0.5
+
+  # For handling environment variables (to store your API URL securely)
+  flutter_dotenv: ^5.1.0
+
+  # For formatting dates and numbers (e.g., currency)
+  intl: ^0.18.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
