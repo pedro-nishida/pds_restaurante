@@ -1,13 +1,5 @@
 import 'package:flutter/foundation.dart';
-
-/// Represents a product from the restaurant's menu.
-class Product {
-  final String id; // A unique identifier for the product (e.g., 'coffee-01')
-  final String name;
-  final double price;
-
-  Product({required this.id, required this.name, required this.price});
-}
+import '../models/product.dart';
 
 /// Represents a line item in the shopping cart.
 /// It contains the product and the quantity being ordered.

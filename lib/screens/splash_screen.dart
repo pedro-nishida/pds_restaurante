@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'welcome_screen.dart';
+import '../utils/app_theme.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -33,7 +34,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       // A purple background to match your app's theme
-      backgroundColor: Colors.deepPurple,
+      backgroundColor: AppColors.primary,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -49,13 +50,13 @@ class _SplashScreenState extends State<SplashScreen> {
                 return const Icon(
                   Icons.store,
                   size: 150,
-                  color: Colors.white,
+                  color: AppColors.onPrimary,
                 );
               },
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: AppDimensions.paddingL),
             const CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+              valueColor: AlwaysStoppedAnimation<Color>(AppColors.onPrimary),
             ),
           ],
         ),
