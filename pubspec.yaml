@@ -41,10 +41,13 @@ dependencies:
   provider: ^6.0.5
 
   # For handling environment variables (to store your API URL securely)
-  flutter_dotenv: ^5.1.0
+  flutter_dotenv: ^6.0.0
 
   # For formatting dates and numbers (e.g., currency)
-  intl: ^0.18.1
+  intl: ^0.17.0
+
+  fl_chart: ^1.1.0
+  shared_preferences: ^2.5.3
 
 dev_dependencies:
   flutter_test:
@@ -55,7 +58,7 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^5.0.0
+  flutter_lints: ^6.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

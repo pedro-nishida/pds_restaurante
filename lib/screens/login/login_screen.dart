@@ -69,12 +69,12 @@ class _LoginScreenState extends State<LoginScreen> {
                         const SizedBox(height: AppDimensions.paddingM),
                         Text(
                           'POS Restaurant',
-                          style: AppTextStyles.headline1,
+                          style: Theme.of(context).textTheme.headlineLarge,
                         ),
                         const SizedBox(height: AppDimensions.paddingS),
                         Text(
                           'Sign in to continue',
-                          style: AppTextStyles.bodyMedium,
+                          style: Theme.of(context).textTheme.bodyMedium,
                         ),
                         const SizedBox(height: AppDimensions.paddingXL),
                         

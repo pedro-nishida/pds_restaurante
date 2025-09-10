@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../provider/cart_provider.dart';
 import '../../../utils/app_theme.dart';
+import '../../checkout/checkout_screen.dart';
 
 class CartPanel extends StatelessWidget {
   const CartPanel({super.key});
@@ -30,7 +31,7 @@ class CartPanel extends StatelessWidget {
                   children: [
                     Text(
                       'Current Order',
-                      style: AppTextStyles.headline3.copyWith(fontSize: 16), // Menor
+                      style: Theme.of(context).textTheme.headlineMedium, // Menor
                     ),
                     if (cart.items.isNotEmpty)
                       TextButton(
@@ -76,7 +77,7 @@ class CartPanel extends StatelessWidget {
                             const SizedBox(height: AppDimensions.paddingS),
                             Text(
                               'No items',
-                              style: AppTextStyles.bodySmall,
+                              style: Theme.of(context).textTheme.bodySmall,
                             ),
                           ],
                         ),
@@ -104,7 +105,7 @@ class CartPanel extends StatelessWidget {
                                 // Nome do produto
                                 Text(
                                   cartItem.product.name,
-                                  style: AppTextStyles.cardTitle.copyWith(fontSize: 12),
+                                  style: Theme.of(context).textTheme.titleSmall?.copyWith(fontSize: 12),
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                 ),
@@ -113,7 +114,7 @@ class CartPanel extends StatelessWidget {
                                 // Preço unitário
                                 Text(
                                   '\$${cartItem.product.price.toStringAsFixed(2)} each',
-                                  style: AppTextStyles.bodySmall.copyWith(fontSize: 10),
+                                  style: Theme.of(context).textTheme.bodySmall?.copyWith(fontSize: 10),
                                 ),
                                 const SizedBox(height: AppDimensions.paddingXS),
                                 
@@ -183,7 +184,11 @@ class CartPanel extends StatelessWidget {
                                     // Total do item
                                     Text(
                                       '\$${(cartItem.product.price * cartItem.quantity).toStringAsFixed(2)}',
-                                      style: AppTextStyles.priceText.copyWith(fontSize: 12),
+                                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                                        fontSize: 12,
+                                        color: Theme.of(context).colorScheme.primary,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -209,11 +214,14 @@ class CartPanel extends StatelessWidget {
                       children: [
                         Text(
                           'Items: ${cart.totalItemCount}',
-                          style: AppTextStyles.bodySmall,
+                          style: Theme.of(context).textTheme.bodySmall,
                         ),
                         Text(
                           'Total: \$${cart.totalPrice.toStringAsFixed(2)}',
-                          style: AppTextStyles.priceText.copyWith(fontSize: 16),
+                          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: AppTheme.priceGreen,
+                          ),
                         ),
                       ],
                     ),
@@ -225,14 +233,13 @@ class CartPanel extends StatelessWidget {
                       child: ElevatedButton(
                         onPressed: cart.items.isEmpty
                             ? null
-                            : () {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text('Checkout functionality coming soon!'),
-                                    duration: Duration(seconds: 2),
-                                  ),
-                                );
-                              },
+                              : () {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) => const CheckoutScreen(),
+                                    ),
+                                  );
+                                },
                         style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(vertical: 8),
                         ),
