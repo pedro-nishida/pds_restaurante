@@ -4,6 +4,19 @@ import '../../../provider/cart_provider.dart';
 import '../../../models/product.dart';
 import '../../../utils/app_theme.dart';
 
+/// Widget responsivo que exibe produtos em um grid adaptativo
+/// 
+/// Breakpoints de responsividade:
+/// - < 600px (Smartphones): 2 colunas
+/// - 600-900px (Tablets pequenos): 3 colunas  
+/// - 900-1200px (Tablets grandes): 4 colunas
+/// - > 1200px (Desktops): 5 colunas
+///
+/// Ajustes automáticos:
+/// - Tamanhos de fonte maiores em smartphones
+/// - Ícones maiores em telas pequenas
+/// - Padding e spacing reduzidos em smartphones
+/// - Mais linhas de texto para descrição em smartphones
 class ProductGrid extends StatelessWidget {
   final List<Product> products;
   
@@ -14,14 +27,43 @@ class ProductGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Obter o tamanho da tela
+    final screenWidth = MediaQuery.of(context).size.width;
+    
+    // Determinar o número de colunas baseado na largura da tela
+    int crossAxisCount;
+    double childAspectRatio;
+    
+    if (screenWidth < 600) {
+      // Smartphones: 2 colunas
+      crossAxisCount = 1;
+      childAspectRatio = 0.8;
+    } else if (screenWidth < 900) {
+      // Tablets pequenos: 3 colunas
+      crossAxisCount = 3;
+      childAspectRatio = 0.75;
+    } else if (screenWidth < 1200) {
+      // Tablets grandes: 4 colunas
+      crossAxisCount = 4;
+      childAspectRatio = 0.75;
+    } else {
+      // Desktops: 5 colunas
+      crossAxisCount = 5;
+      childAspectRatio = 0.7;
+    }
+    
+    // Ajustar padding e spacing baseado no tamanho da tela
+    final padding = screenWidth < 600 ? AppDimensions.paddingS : AppDimensions.paddingM;
+    final spacing = screenWidth < 600 ? AppDimensions.paddingXS : AppDimensions.paddingS;
+    
     return Expanded(
       child: GridView.builder(
-        padding: const EdgeInsets.all(AppDimensions.paddingM),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 4, // Aumentado de 3 para 4 (itens menores)
-          childAspectRatio: 0.75, // Ajustado para itens mais compactos
-          crossAxisSpacing: AppDimensions.paddingS,
-          mainAxisSpacing: AppDimensions.paddingS,
+        padding: EdgeInsets.all(padding),
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: crossAxisCount,
+          childAspectRatio: childAspectRatio,
+          crossAxisSpacing: spacing,
+          mainAxisSpacing: spacing,
         ),
         itemCount: products.length,
         itemBuilder: (context, index) {
@@ -32,18 +74,6 @@ class ProductGrid extends StatelessWidget {
               onTap: () {
                 Provider.of<CartProvider>(context, listen: false)
                     .addItem(product);
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text('${product.name} added to cart'),
-                    duration: const Duration(milliseconds: 800),
-                    behavior: SnackBarBehavior.floating,
-                    margin: const EdgeInsets.only(
-                      bottom: 80,
-                      left: 20,
-                      right: 20,
-                    ),
-                  ),
-                );
               },
               borderRadius: BorderRadius.circular(AppDimensions.radiusM),
               child: Padding(
@@ -51,19 +81,21 @@ class ProductGrid extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    // Ícone da categoria
+                    // Ícone da categoria (responsivo)
                     Icon(
                       _getCategoryIcon(product.category),
-                      size: 24, // Diminuído de 32 para 24
-                      color: AppColors.primary,
+                      size: screenWidth < 600 ? 28 : 24, // Maior em smartphones
+                      color: Theme.of(context).colorScheme.primary,
                     ),
                     const SizedBox(height: AppDimensions.paddingXS),
                     
-                    // Nome do produto
+                    // Nome do produto (responsivo)
                     Flexible(
                       child: Text(
                         product.name,
-                        style: AppTextStyles.cardTitle.copyWith(fontSize: 11),
+                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                          fontSize: screenWidth < 600 ? 13 : 11, // Maior em smartphones
+                        ),
                         textAlign: TextAlign.center,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
@@ -71,21 +103,27 @@ class ProductGrid extends StatelessWidget {
                     ),
                     const SizedBox(height: AppDimensions.paddingXS),
                     
-                    // Preço
+                    // Preço (responsivo)
                     Text(
                       '\$${product.price.toStringAsFixed(2)}',
-                      style: AppTextStyles.priceText.copyWith(fontSize: 12),
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        fontSize: screenWidth < 600 ? 14 : 12, // Maior em smartphones
+                        color: Theme.of(context).colorScheme.primary,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     
-                    // Descrição (se houver)
+                    // Descrição (se houver) - responsiva
                     if (product.description != null && product.description!.isNotEmpty)
                       Padding(
                         padding: const EdgeInsets.only(top: 2),
                         child: Text(
                           product.description!,
-                          style: AppTextStyles.bodySmall.copyWith(fontSize: 9),
+                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            fontSize: screenWidth < 600 ? 10 : 9, // Maior em smartphones
+                          ),
                           textAlign: TextAlign.center,
-                          maxLines: 1,
+                          maxLines: screenWidth < 600 ? 2 : 1, // Mais linhas em smartphones
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),

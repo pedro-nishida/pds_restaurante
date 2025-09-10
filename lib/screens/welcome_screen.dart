@@ -39,7 +39,10 @@ class WelcomeScreen extends StatelessWidget {
                       ),
                       child: Text(
                         cart.items.length.toString(), // Mostra quantidade de produtos unicos
-                        style: AppTextStyles.cartBadgeText,
+                        style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                          color: Theme.of(context).colorScheme.onPrimary,
+                          fontWeight: FontWeight.bold,
+                        ),
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -56,14 +59,18 @@ class WelcomeScreen extends StatelessWidget {
                 const SizedBox(height: AppDimensions.paddingL),
                 Text(
                   'Welcome to your Flutter POS System!',
-                  style: AppTextStyles.headline2,
+                  style: Theme.of(context).textTheme.headlineMedium,
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: AppDimensions.paddingL),
                 // Display the current total from the cart
                 Text(
                   'Cart Total: \$${cart.totalPrice.toStringAsFixed(2)}',
-                  style: AppTextStyles.priceText.copyWith(fontSize: 20),
+                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                    color: Theme.of(context).colorScheme.primary,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
                 ),
                 const SizedBox(height: AppDimensions.paddingL),
                 ElevatedButton(

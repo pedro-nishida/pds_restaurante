@@ -38,24 +38,24 @@ class CartScreen extends StatelessWidget {
       body: Consumer<CartProvider>(
         builder: (context, cart, child) {
           if (cart.items.isEmpty) {
-            return const Center(
+            return Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(
                     Icons.shopping_cart_outlined,
                     size: 80,
-                    color: AppColors.grey,
+                    color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.5),
                   ),
                   SizedBox(height: AppDimensions.paddingM),
                   Text(
                     'Your cart is empty',
-                    style: AppTextStyles.headline3,
+                    style: Theme.of(context).textTheme.displaySmall,
                   ),
                   SizedBox(height: AppDimensions.paddingS),
                   Text(
                     'Add some items to get started!',
-                    style: AppTextStyles.bodyMedium,
+                    style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ],
               ),
@@ -82,12 +82,12 @@ class CartScreen extends StatelessWidget {
                                 children: [
                                   Text(
                                     cartItem.product.name,
-                                    style: AppTextStyles.cardTitle,
+                                    style: Theme.of(context).textTheme.titleMedium,
                                   ),
                                   const SizedBox(height: AppDimensions.paddingXS),
                                   Text(
                                     '\$${cartItem.product.price.toStringAsFixed(2)} each',
-                                    style: AppTextStyles.bodySmall,
+                                    style: Theme.of(context).textTheme.bodySmall,
                                   ),
                                 ],
                               ),
@@ -112,7 +112,7 @@ class CartScreen extends StatelessWidget {
                                   ),
                                   child: Text(
                                     '${cartItem.quantity}',
-                                    style: AppTextStyles.bodyMedium,
+                                    style: Theme.of(context).textTheme.bodyMedium,
                                   ),
                                 ),
                                 IconButton(
@@ -127,7 +127,10 @@ class CartScreen extends StatelessWidget {
                             const SizedBox(width: AppDimensions.paddingS),
                             Text(
                               '\$${(cartItem.product.price * cartItem.quantity).toStringAsFixed(2)}',
-                              style: AppTextStyles.priceText,
+                              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                                color: Theme.of(context).colorScheme.primary,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ],
                         ),
@@ -151,11 +154,14 @@ class CartScreen extends StatelessWidget {
                       children: [
                         Text(
                           'Total Items: ${cart.totalItemCount}',
-                          style: AppTextStyles.bodyLarge,
+                          style: Theme.of(context).textTheme.bodyLarge,
                         ),
                         Text(
                           'Total: \$${cart.totalPrice.toStringAsFixed(2)}',
-                          style: AppTextStyles.priceText.copyWith(fontSize: 18),
+                          style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                            color: Theme.of(context).colorScheme.primary,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ],
                     ),

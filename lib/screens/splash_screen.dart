@@ -34,7 +34,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       // A purple background to match your app's theme
-      backgroundColor: AppColors.primary,
+      backgroundColor: Theme.of(context).colorScheme.primary,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -47,16 +47,16 @@ class _SplashScreenState extends State<SplashScreen> {
               height: 150,
               // Add a fallback in case the image fails to load
               errorBuilder: (context, error, stackTrace) {
-                return const Icon(
+                return Icon(
                   Icons.store,
                   size: 150,
-                  color: AppColors.onPrimary,
+                  color: Theme.of(context).colorScheme.onPrimary,
                 );
               },
             ),
             const SizedBox(height: AppDimensions.paddingL),
-            const CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(AppColors.onPrimary),
+            CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).colorScheme.onPrimary),
             ),
           ],
         ),
